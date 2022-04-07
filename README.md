@@ -16,5 +16,11 @@
 - [x] Practice IndexedDB for [PWAs](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 - [x] Practice third-party libs with React
 - [x] Learn [React Portals](https://reactjs.org/docs/portals.html)
-- [x] Create useful generic components from scratch (Modal and Select datalist) 
+- [x] Create useful generic components from scratch (Modal and Select datalist)
+
+## App Gifs
+![create task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/addtask.gif)
+![drag task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtask.gif)
+![fail task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtaskfailed.gif)
+![delete task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/deletetask.gif)
 
