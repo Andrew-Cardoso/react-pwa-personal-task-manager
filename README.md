@@ -19,7 +19,9 @@
 - [x] Create useful generic components from scratch (Modal and Select datalist)
 
 ## App Gifs
-<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/addtask.gif" width="320" height="320" />
-<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtask.gif" width="320" height="320" />
-<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtaskfailed.gif" width="320" height="320" />
-<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/deletetask.gif" width="320" height="320" />
+<div>
+<img align="center" alt="add task" src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/addtask.gif" width="280" height="280" />
+<img align="center" alt="drag task" src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtask.gif" width="280" height="280" />
+<img align="center" alt="fail task" src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtaskfailed.gif" width="280" height="280" />
+<img align="center" alt="delete task" src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/deletetask.gif" width="280" height="280" />
+</div>
