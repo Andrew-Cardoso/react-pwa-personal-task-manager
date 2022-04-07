@@ -19,8 +19,7 @@
 - [x] Create useful generic components from scratch (Modal and Select datalist)
 
 ## App Gifs
-![create task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/addtask.gif)
-![drag task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtask.gif)
-![fail task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtaskfailed.gif)
-![delete task](https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/deletetask.gif)
-
+<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/addtask.gif" width="320" height="320" />
+<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtask.gif" width="320" height="320" />
+<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/dragtaskfailed.gif" width="320" height="320" />
+<img src="https://github.com/Andrew-Cardoso/react-pwa-personal-task-manager/blob/main/gifs/deletetask.gif" width="320" height="320" />
