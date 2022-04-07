@@ -1,5 +1,5 @@
-import {Main} from './Main';
-import {Container, Title} from './style';
+import { Main } from "./Main";
+import { Container, Title } from "./style";
 
 export const Home = () => {
 	return (

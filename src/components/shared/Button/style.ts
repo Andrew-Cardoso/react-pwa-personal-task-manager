@@ -1,5 +1,5 @@
-import {styled} from '@stitches/react';
-import {ColorsEnum, FancyBorderRadius} from '../styles';
+import { styled } from '@stitches/react';
+import { ColorsEnum, FancyBorderRadius } from '../styles';
 
 export const StyledButton = styled('button', {
 	borderRadius: FancyBorderRadius,
@@ -10,6 +10,11 @@ export const StyledButton = styled('button', {
 	cursor: 'pointer',
 	variants: {
 		size: {
+			icon: {
+				height: 'auto',
+				width: 'auto',
+				padding: '.25rem'
+			},
 			sm: {
 				height: '2rem',
 				padding: '0 1rem',
@@ -41,6 +46,9 @@ export const StyledButton = styled('button', {
 			},
 			danger: {
 				backgroundColor: ColorsEnum.DANGER,
+			},
+			transparent: {
+				backgroundColor: 'transparent',
 			},
 		},
 		hasIcon: {

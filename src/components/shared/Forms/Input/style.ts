@@ -1,11 +1,48 @@
-import {styled} from '@stitches/react';
-import {ColorsEnum} from '../../styles';
+import { keyframes, styled } from '@stitches/react';
+import { ColorsEnum } from '../../styles';
+
+const shrinkBounce = keyframes({
+	'0%': {
+		transform: 'scale(1)',
+	},
+	'33%': {
+		transform: 'scale(0.85)',
+	},
+	'100%': {
+		transform: 'scale(1)',
+	}
+})
+
+const checkboxCheck = keyframes({
+	'0%': {
+		width: '0',
+		height: '0',
+		transform: 'translate3d(0, 0, 0) rotate(45deg)',
+	},
+	'33%': {
+		width: '0.3rem',
+		height: '0',
+		transform: 'translate3d(0, 0, 0) rotate(45deg)',
+	},
+	'100%': {
+		width: '0.3rem',
+		height: '0.7rem',
+		transform: 'translate3d(0, -0.5em, 0) rotate(45deg)',
+	}
+})
 
 export const GroupContainer = styled('section', {
 	width: '100%',
 	height: '6rem',
 	display: 'grid',
 	gridTemplateRows: '1fr 1.5rem',
+	variants: {
+		forType: {
+			textarea: {
+				height: '9rem'
+			}
+		}
+	}
 });
 
 export const InputContainer = styled('div', {
@@ -45,7 +82,7 @@ export const StyledError = styled('div', {
 	},
 });
 
-export const StyledInput = styled('input', {
+const inputAndTextareaSharedStyle = {
 	width: '100%',
 	height: '100%',
 	background: 'transparent',
@@ -57,12 +94,6 @@ export const StyledInput = styled('input', {
 	borderWidth: '0',
 	transition: 'border-width 250ms ease-out',
 	textTransform: 'capitalize',
-	'&:placeholder-shown + label': {
-		fontSize: '1.2rem',
-		left: '1.25rem',
-		top: 'calc(50% - .6rem)',
-		fontWeight: 400,
-	},
 	'&:disabled': {
 		cursor: 'not-allowed',
 	},
@@ -73,7 +104,26 @@ export const StyledInput = styled('input', {
 			},
 		},
 	},
+}
+export const StyledInput = styled('input', {
+	...inputAndTextareaSharedStyle,
+	'&:placeholder-shown + label': {
+		fontSize: '1.2rem',
+		left: '1.25rem',
+		top: 'calc(50% - .6rem)',
+		fontWeight: 400,
+	},
 });
+
+export const StyledTextarea = styled('textarea', {
+	...inputAndTextareaSharedStyle,
+	'&:placeholder-shown + label': {
+		fontSize: '1.2rem',
+		left: '1.25rem',
+		top: '1rem',
+		fontWeight: 400,
+	},
+})
 
 export const IconContainer = styled('div', {
 	position: 'absolute',
@@ -92,5 +142,76 @@ export const IconContainer = styled('div', {
 				transform: 'scale(1) translateX(0)',
 			},
 		},
-	},
+		show: {
+			true: {
+				color: ColorsEnum.MAIN_TEXT,
+				transform: 'scale(1) translateX(0)',
+			}
+		}
+	},	
 });
+
+export const CheckboxGroupContainer = styled('section', {
+	width: '100%',
+	height: '3rem',
+	display: 'grid',
+	alignItems: 'center',
+	alignContent: 'center',
+	justifyContent: 'flex-start',
+	justifyItems: 'flex-start',
+})
+
+export const CheckboxContainer = styled('div', {
+	width: '100%',
+	height: '100%',
+	display: 'flex',
+	'& p': {
+		fontSize: '1.05rem',
+	},
+	'& p::first-letter': {
+		textTransform: 'capitalize',
+	},
+	'& > input': {
+		height: 0,
+		width: 0,
+	},
+	'& > input + label': {
+		position: 'relative',
+		display: 'flex',
+		margin: '0',
+		alignItems: 'center',
+		transition: 'transform 250ms cubic-bezier(0.4, 0, 0.23, 1)',
+	},
+	'& > input + label:hover': {
+		transform: 'scale(1.1) translateX(5%)',
+	},
+	'& > input + label > span': {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginRight: '1rem',
+		width: '1.5rem',
+		height: '1.5rem',
+		background: ColorsEnum.EYE_CATCHING,
+		borderRadius: '0',
+		cursor: 'pointer',
+		transition: 'all 250ms cubic-bezier(0.4, 0, 0.23, 1)',
+	},
+	'& > input:checked + label': {
+		transform: 'scale(1.1) translateX(5%)'
+	},
+	'& > input:checked + label > span': {
+		animation: `${shrinkBounce} 200ms cubic-bezier(0.4, 0, 0.23, 1)`,
+	},
+	'& > input:checked + label > span:before': {
+		content: '',
+		position: 'absolute',
+		top: '0.25rem',
+		left: '0.175rem',
+		borderRight: `.25rem solid ${ColorsEnum.MAIN_TEXT}`,
+		borderBottom: `.25rem solid ${ColorsEnum.MAIN_TEXT}`,
+		transform: 'rotate(45deg)',
+		transformOrigin: '0% 100%',
+		animation: `${checkboxCheck} 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1) forwards`,
+	}
+})

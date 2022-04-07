@@ -6,11 +6,14 @@ export const MainContainer = styled('main', {
 	padding: '1rem',
 	position: 'relative',
 	overflow: 'hidden',
+	display: 'flex',
+	columnGap: '1rem'
 });
 
 export const AddTaskButtonContainer = styled('div', {
-	position: 'absolute',
+	position: 'fixed',
 	right: '0',
+	top: '10%',
 	transition: 'transform 200ms ease-out',
 	transform: 'scale(0.7) skewX(10deg) scaleX(1.5) translateX(1.5rem)',
 

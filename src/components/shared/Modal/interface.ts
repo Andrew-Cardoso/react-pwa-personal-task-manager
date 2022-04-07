@@ -3,6 +3,8 @@ export interface ModalProps {
 	title: string;
 	onClose: (saved: boolean) => any;
 	show?: boolean;
+	saveButtonText?: string;
+	closeButtonText?: string;
 }
 
 export interface ModalState {}

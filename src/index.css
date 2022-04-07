@@ -47,3 +47,15 @@ input::-webkit-inner-spin-button {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+::-webkit-scrollbar {
+	width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+	background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+	background: currentColor;
+  }

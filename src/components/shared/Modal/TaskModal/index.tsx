@@ -1,14 +1,20 @@
-import {Temporal} from '@js-temporal/polyfill';
-import {useMemo, useState} from 'react';
-import {Modal} from '..';
-import {Input} from '../../Forms/Input';
-import {Deadline, Task, TaskPriority, TaskStatus, TestResult} from '../../task.interface';
-import {TaskModalProps} from './interface';
-import {Form, GroupInputs} from './style';
-import {ValidateTask} from './task.validation';
+import { Temporal } from "@js-temporal/polyfill";
+import { useEffect, useMemo, useState } from "react";
+import { Modal } from "..";
+import { Deadline } from "../../../../data/models/deadline";
+import { Task } from "../../../../data/models/task";
+import { TaskPriority } from "../../../../data/models/task-priority";
+import { TaskStatus } from "../../../../data/models/task-status";
+import { Input } from "../../Forms/Input";
+import { TIME_ZONE } from "../../utils/time-zone.const";
+import { TaskModalProps } from "./interface";
+import { Form, GroupInputs } from "./style";
+import { ValidateTask } from "./task.validation";
+import { v4 as uuid } from 'uuid';
+import { getDateNow } from "../../utils/date-now";
 
 const setDates = (task: Partial<Task>) => {
-	const now = Temporal.Now.instant();
+	const now = getDateNow().toString();
 	if (!task.dateCreated) return (task.dateCreated = now);
 	if (!task.dateStarted) return (task.dateCreated = now);
 	if (!task.dateFinished) return (task.dateCreated = now);
@@ -29,25 +35,27 @@ export interface FormTask {
 	// result: FormGroup<TestResult | null>;
 }
 
-export const TaskModal = ({task, title, show, onClose}: TaskModalProps) => {
-	const defaultValues = useMemo<FormTask>(
-		() => ({
-			title: {value: task?.title ?? ''},
-			info: {value: task?.info ?? ''},
-			deadlineValue: {value: task?.deadline ? +task.deadline.split(' ')[0] : 1},
-			deadlineTimeMeasure: {value: task?.deadline ? task.deadline.split(' ')[1] : 'hours'},
-			priority: {value: task?.priority ?? TaskPriority.MEDIUM},
-			// result: {value: task?.result ?? null},
-		}),
-		[task],
-	);
-	const [formState, setFormState] = useState<FormTask>(defaultValues);
+const getDefaultValues = (task?: Task) => ({
+	title: { value: task?.title ?? '' },
+	info: { value: task?.info ?? '' },
+	deadlineValue: { value: task?.deadline ? +task.deadline.split(' ')[0] : 1 },
+	deadlineTimeMeasure: { value: task?.deadline ? task.deadline.split(' ')[1] : 'hours' },
+	priority: { value: task?.priority ?? TaskPriority.MEDIUM },
+	// result: {value: task?.result ?? null},
+});
 
-	const priorityOptions = Object.values(TaskPriority).map((value) => ({label: value, value}));
-	const timeMeasures = ['days', 'hours', 'weeks'].map((value) => ({label: value, value}));
+export const TaskModal = ({ task, title, show, onClose }: TaskModalProps) => {
+	const [formState, setFormState] = useState<FormTask>(getDefaultValues(task));
+
+	useEffect(() => {
+		setFormState(getDefaultValues());
+	}, [show]);
+
+	const priorityOptions = Object.values(TaskPriority).map((value) => ({ label: value, value }));
+	const timeMeasures = ['days', 'hours', 'weeks'].map((value) => ({ label: value, value }));
 
 	const handleChange = (key: keyof FormTask, value: string | number) => {
-		const form = {...formState};
+		const form = { ...formState };
 		form[key].value = value as any;
 		form[key].touched = true;
 		if (key in ValidateTask) form[key].error = ValidateTask[key]!(value);
@@ -57,15 +65,34 @@ export const TaskModal = ({task, title, show, onClose}: TaskModalProps) => {
 	const onModalClose = (saved: boolean) => {
 		if (!saved) return onClose();
 
-		for (const key in formState) {
+		const errorsToUpdate: Partial<Record<keyof FormTask, string>> = {};
+
+		for (const prop in formState) {
+			const key = prop as keyof FormTask;
 			if (Object.prototype.hasOwnProperty.call(formState, key)) {
-				const property = formState[key as keyof FormTask];
-				//  #TODO show error messages
+				const property = formState[key];
 				if (property.error) return;
+				if (key in ValidateTask) {
+					const error = ValidateTask[key]!(property.value);
+					if (error) errorsToUpdate[key] = error;
+				}
 			}
 		}
 
-		const newTask: Partial<Task> = task ? {...task} : {};
+		if (Object.values(errorsToUpdate).length) {
+			const form = {...formState};
+			for (const prop in errorsToUpdate) {
+				const key = prop as keyof FormTask;
+				if (Object.prototype.hasOwnProperty.call(errorsToUpdate, key)) {
+					const error = errorsToUpdate[key];
+					form[key].touched = true;
+					form[key].error = error;
+				}
+			}	
+			return setFormState(form);
+		}
+
+		const newTask: Partial<Task> = task ? { ...task } : {};
 		setDates(newTask);
 		newTask.deadline =
 			`${formState.deadlineValue.value} ${formState.deadlineTimeMeasure.value}` as Deadline;
@@ -73,6 +100,7 @@ export const TaskModal = ({task, title, show, onClose}: TaskModalProps) => {
 		newTask.title = formState.title.value;
 		newTask.priority = formState.priority.value;
 		newTask.status ??= TaskStatus.TO_DO;
+		newTask.id ??= uuid();
 
 		onClose(newTask as Task);
 	};
